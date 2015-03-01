@@ -1,0 +1,48 @@
+SetByAll = 144;
+
+PlainFunc = function () {}
+ServerFunc = function () {if(Meteor.isServer){true;}}
+ClientFunc = function () {if(Meteor.isClient){true;}}
+CordovaFunc = function () {if(Meteor.isCordova){true;}}
+
+if (Meteor.isServer) {
+  SetByServer = 1029;
+}
+
+if (Meteor.isClient) {
+  SetByClient = 5023;
+}
+
+if (Meteor.isCordova) {
+  SetByCordova = 9121;
+}
+
+if (!Meteor.isServer) {
+  SetByNotServer = 3192;
+}
+
+if (!Meteor.isClient) {
+  SetByNotClient = 2830;
+}
+
+if (!Meteor.isCordova) {
+  SetByNotCordova = 4702;
+}
+
+if (false) {
+}
+else if (!Meteor.isServer) {
+  SetByElseNotServer = 8301;
+}
+
+if (false) {
+}
+else if (!Meteor.isClient) {
+  SetByElseNotClient = 3851;
+}
+
+if (false) {
+}
+else if (!Meteor.isCordova) {
+  SetByElseNotCordova = 3750;
+}

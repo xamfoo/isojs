@@ -1,3 +1,5 @@
+Npm.depends({'esprima': '2.0.0'});
+
 Package.describe({
   name: 'xamfoo:isojs',
   version: '0.0.1',
@@ -10,13 +12,20 @@ Package.describe({
   documentation: 'README.md'
 });
 
-Package.onUse(function(api) {
-  api.versionsFrom('1.0.3.2');
-  api.addFiles('xamfoo:isojs.js');
+Package.registerBuildPlugin({
+  name: "compileIsojs",
+  use: [],
+  sources: [
+    'plugin/compile-isojs.js'
+  ],
+  npmDependencies: {'esprima': '2.0.0', 'escodegen': '1.6.1'}
 });
 
 Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('xamfoo:isojs');
-  api.addFiles('xamfoo:isojs-tests.js');
+  api.use(['tinytest', 'xamfoo:isojs']);
+  api.addFiles('tests_setup.isojs', ['server', 'client']);
+  api.addFiles('tests_server.js', ['server']);
+  api.addFiles('esprima.js', ['client']);
+  api.addFiles('tests_browser.js', ['web.browser']);
+  api.addFiles('tests_cordova.js', ['web.cordova']);
 });
