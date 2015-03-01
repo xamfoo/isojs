@@ -1,0 +1,19 @@
+Messages = {insert: function () {}};
+UpdateView = function () {};
+SendPush = function () {};
+
+Meteor.methods({
+  sendMessage: function (msg) {
+    if (Meteor.isClient) {
+      UpdateView();
+
+      if (Meteor.isCordova) {
+        SendPush();
+      }
+    }
+
+    if (Meteor.isServer) {
+      Messages.insert({msg: msg});
+    }
+  }
+});
