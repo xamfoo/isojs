@@ -3,12 +3,8 @@ Npm.depends({'esprima': '2.0.0'});
 Package.describe({
   name: 'xamfoo:isojs',
   version: '0.0.1',
-  // Brief, one-line summary of the package.
-  summary: '',
-  // URL to the Git repository containing the source code for this package.
-  git: '',
-  // By default, Meteor will default to using README.md for documentation.
-  // To avoid submitting documentation, set this field to null.
+  summary: 'Build plugin: Parses and removes extraneous code for the server and client',
+  git: 'https://github.com/xamfoo/isojs',
   documentation: 'README.md'
 });
 
