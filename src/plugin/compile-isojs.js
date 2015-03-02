@@ -4,17 +4,24 @@ var esprima = Npm.require('esprima');
 var escodegen = Npm.require('escodegen');
 
 // Convert source to abstract syntax tree
-var toAst = function (source) {
+var toAst = function (source, options) {
   var ast = esprima.parse(
-    source, { raw: true, tokens: true, range: true, comment: true }
+    source,
+    {
+      raw: true, tokens: true, range: true, comment: true,
+      loc: true, source: options && options.source
+    }
   );
   return ast;
 }
 
 // Convert abstract syntax tree back to source
-var toSource = function (ast) {
+var toSource = function (ast, options) {
   ast = escodegen.attachComments(ast, ast.comments, ast.tokens);
-  var source = escodegen.generate(ast, {comment: true});
+  var source = escodegen.generate(
+    ast,
+    {comment: true, sourceMap: (options && options.source) || true, sourceMapWithCode: true}
+  );
   return source;
 }
 
@@ -271,7 +278,15 @@ var getFilter = function (arch) {
 // Compile handler
 var handler = function (compileStep) {
   var source = compileStep.read().toString('utf8');
-  var ast = toAst(source);
+  try {
+    var ast = toAst(source, {source: compileStep.pathForSourceMap});
+  }
+  catch (e) {
+    throw new Error(
+      compileStep.inputPath + ':' +
+        (e.location ? (e.location.first_line + ': ') : ' ') + e.message
+    );
+  }
   var outputFile = compileStep.inputPath + '.js';
 
   if (compileStep.arch === 'os') {
@@ -284,15 +299,27 @@ var handler = function (compileStep) {
     ast = getFilter('cordova')(ast);
   }
 
-  if (!ast) throw "Invalid ast";
-  source = toSource(ast);
-  if (typeof source === 'string') {
-    if (!source.length) return;
+  if (!ast) {
+    console.log("isojs: Cannot generate source from " + compileStep.inputPath);
+    return;
+  }
+  try {
+    source = toSource(ast);
+  }
+  catch (e) {
+    throw new Error(
+      compileStep.inputPath + ':' +
+        (e.location ? (e.location.first_line + ': ') : ' ') + e.message
+    );
+  }
+  if (typeof source.code === 'string') {
+    if (!source.code.length) return;
 
     compileStep.addJavaScript({
       path: outputFile,
       sourcePath: compileStep.inputPath,
-      data: source,
+      data: source.code,
+      sourceMap: JSON.parse(source.map.toString()),
       bare: compileStep.fileOptions.bare
     });
   }
