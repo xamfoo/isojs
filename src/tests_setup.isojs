@@ -1,20 +1,52 @@
 SetByAll = 144;
 
 PlainFunc = function () {}
+TrueFunc = function () {true;}
+FalseFunc = function () {false;}
+IfElseFunc = function () {if(true){true;}else{false;}}
+IfElseTrueFunc = function () {if(true){true;}else{true;}}
+
 ServerFunc = function () {if(Meteor.isServer){true;}}
 ClientFunc = function () {if(Meteor.isClient){true;}}
 CordovaFunc = function () {if(Meteor.isCordova){true;}}
 
+ServerElseFunc = function () {if(Meteor.isServer){true;}else{false;}}
+ClientElseFunc = function () {if(Meteor.isClient){true;}else{false;}}
+CordovaElseFunc = function () {if(Meteor.isCordova){true;}else{false;}}
+
+ServerElseIfFunc =
+  function () {if(Meteor.isServer){true;}else if(true){true;}else{false;}};
+ClientElseIfFunc =
+  function () {if(Meteor.isClient){true;}else if(true){true;}else{false;}};
+CordovaElseIfFunc =
+  function () {if(Meteor.isCordova){true;}else if(true){true;}else{false;}};
+
+ServerIfElseIfFunc =
+  function () {if(true){true;}else if(Meteor.isServer){true;}else{false;}};
+ClientIfElseIfFunc =
+  function () {if(true){true;}else if(Meteor.isClient){true;}else{false;}};
+CordovaIfElseIfFunc =
+  function () {if(true){true;}else if(Meteor.isCordova){true;}else{false;}};
+
 if (Meteor.isServer) {
   SetByServer = 1029;
+}
+else {
+  SetByServerElse = 3293;
 }
 
 if (Meteor.isClient) {
   SetByClient = 5023;
 }
+else {
+  SetByClientElse = 4852;
+}
 
 if (Meteor.isCordova) {
   SetByCordova = 9121;
+}
+else {
+  SetByCordovaElse = 8392;
 }
 
 if (!Meteor.isServer) {
