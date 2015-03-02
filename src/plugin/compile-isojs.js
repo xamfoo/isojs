@@ -286,14 +286,19 @@ var handler = function (compileStep) {
 
   if (!ast) throw "Invalid ast";
   source = toSource(ast);
-  if (!source) throw "Error generating source";
+  if (typeof source === 'string') {
+    if (!source.length) return;
 
-  compileStep.addJavaScript({
-    path: outputFile,
-    sourcePath: compileStep.inputPath,
-    data: source,
-    bare: compileStep.fileOptions.bare
-  });
+    compileStep.addJavaScript({
+      path: outputFile,
+      sourcePath: compileStep.inputPath,
+      data: source,
+      bare: compileStep.fileOptions.bare
+    });
+  }
+  else {
+    console.log("isojs: Cannot generate source from " + compileStep.inputPath);
+  }
 }
 
 Plugin.registerSourceHandler('isojs', handler);
