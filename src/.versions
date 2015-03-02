@@ -9,7 +9,7 @@ follower-livedata@1.0.3
 geojson-utils@1.0.2
 id-map@1.0.2
 json@1.0.2
-local-test:xamfoo:isojs@0.0.4
+local-test:xamfoo:isojs@0.0.5
 logging@1.0.6
 meteor@1.1.4
 minimongo@1.0.6
@@ -20,4 +20,4 @@ retry@1.0.2
 tinytest@1.0.4
 tracker@1.0.5
 underscore@1.0.2
-xamfoo:isojs@0.0.4
+xamfoo:isojs@0.0.5
