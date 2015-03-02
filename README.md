@@ -67,15 +67,36 @@ to this:
 This package is a proof of concept and is not recommended for use in
 production.
 
+### Install
+
     meteor add xamfoo:isojs
 
-Wrap your code in the any of the following format:
+### Format
+
+Wrap your code in the any of the following formats:
 
 `if (Meteor.isServer) {...}`
 
+`if (Meteor.isClient) {...}`
+
+`if (Meteor.isCordova) {...}`
+
+`if (!Meteor.isServer) {...}`
+
 `if (!Meteor.isClient) {...}`
 
-#### Save your code with file extension `.isojs`
+`if (!Meteor.isCordova) {...}`
+
+The parser also recognizes `else if` blocks so the following formats would also
+be processed:
+
+`if (...) {...} else if (Meteor.isServer) {...} else {...}`
+
+`if (...) {...} else if (...) {...} else if (Meteor.isServer) {...} else {...}`
+
+### Filenames
+
+Save your code with file extension `.isojs`
 
 Configure your IDE to recognize `.isojs` as javascript
 
