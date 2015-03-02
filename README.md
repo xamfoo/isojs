@@ -182,7 +182,8 @@ These NPM packages are used:
 
 The package parses all files ending with `.isojs` into ASTs (abstract syntax
 tree) with `esprima`. Wrapped nodes are replaced or removed, then the ASTs are
-parsed back into javascript with `escodegen`.
+parsed back into javascript with `escodegen`. Source maps are also generated
+so that line numbers matches when debugging.
 
 ## Unsupported
 
@@ -190,5 +191,4 @@ parsed back into javascript with `escodegen`.
 - Parser doesn't match now when `&& ||` operators are used i.e.
 `if (i > 0 && Meteor.isXX)`
 - Writing packages with `.isojs` is untested but should work.
-- Coffeescript
-- The process does not produce a sourcemap
+- Doesn't work with CoffeeScript for now
