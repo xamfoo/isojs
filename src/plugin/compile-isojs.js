@@ -39,16 +39,20 @@ var filterTree = function (tree, match, options) {
   if (!tree || !match) return tree;
   if (tree.type === 'IfStatement' && partialMatch(tree.test, match)) {
     if (options && typeof options.onMatch === 'function')
-      return options.onMatch(tree);
+      return options.onMatch.call(this, tree);
   }
   if (tree instanceof Array) {
-    return _.map(tree, function (subTree) {
-      return filterTree(subTree, match, options);
+    return _.map(tree, function (subTree, k) {
+      return filterTree.call(
+        {parent: tree, parentKey: k}, subTree, match, options
+      );
     });
   }
   else if (tree instanceof Object) {
     var newTree = _.reduce(tree, function (memo, subTree, k) {
-      var newTree = filterTree(subTree, match, options);
+      var newTree = filterTree.call(
+        {parent: tree, parentKey: k}, subTree, match, options
+      );
       if (k === 'body' && newTree instanceof Array)
         newTree = _.filter(newTree, function (x) {
           return x instanceof Object;
@@ -63,13 +67,34 @@ var filterTree = function (tree, match, options) {
 
 // Replace an if statement with the else block
 var replaceWithAlternate = function (tree) {
-  if ('alternate' in tree) return tree.alternate;
+  var self = this;
+
+  if ('alternate' in tree) {
+    if (!tree.alternate) return tree.alternate;
+    if (tree.alternate.type === 'BlockStatement') {
+      if (self.parentKey === 'alternate' || self.parentKey === 'consequent')
+        return tree.alternate;
+      else return _.extend(tree.alternate, {type: 'Program'});
+    }
+    return tree.alternate;
+  }
   else throw "Alternate does not exist in if statement";
 }
 
 // Replace an if statement with the if block
 var replaceWithConsequent = function (tree) {
-  if ('consequent' in tree) return _.extend(tree.consequent, {type: 'Program'});
+  var self = this;
+
+  if ('consequent' in tree) {
+    if (!tree.consequent) return tree.consequent;
+    if (tree.consequent.type === 'BlockStatement') {
+      if (self.parentKey === 'alternate' || self.parentKey === 'consequent')
+        return tree.consequent;
+      else
+        return _.extend(tree.consequent, {type: 'Program'});
+    }
+    return tree.consequent;
+  }
   else throw "Consequent does not exist in if statement";
 }
 
