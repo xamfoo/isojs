@@ -102,11 +102,11 @@ Flattening means the following:
 >
 >     doSomething();
 
-#### Unary operator
+#### NOT(!) operator
 
     if (!Meteor.isXX) {...}
 
-A single unary operator is supported turn a truthy If Else block to a falsy one.
+A single `!` operator is supported to turn a truthy block to a falsy one.
 
 Code wrapped in `if (!Meteor.isServer) {...}` is removed in the server
 payload and flattened in the client payload.
