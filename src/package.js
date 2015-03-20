@@ -3,7 +3,7 @@ Npm.depends({'esprima': '2.1.0'});
 Package.describe({
   name: 'xamfoo:isojs',
   version: '0.0.6',
-  summary: 'Build plugin: Parses and removes extraneous code for the server and client',
+  summary: 'Build plugin: Parses and removes extraneous code for server, client and mobile',
   git: 'https://github.com/xamfoo/isojs',
   documentation: 'README.md'
 });
