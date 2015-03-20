@@ -2,7 +2,7 @@ Npm.depends({'esprima': '2.1.0'});
 
 Package.describe({
   name: 'xamfoo:isojs',
-  version: '0.0.6',
+  version: '0.0.7',
   summary: 'Build plugin: Parses and removes extraneous code for server, client and mobile',
   git: 'https://github.com/xamfoo/isojs',
   documentation: 'README.md'
@@ -16,6 +16,10 @@ Package.registerBuildPlugin({
   ],
   npmDependencies: {'esprima': '2.1.0', 'escodegen': '1.6.1'}
 });
+
+Package.onUse(function (api) {
+  api.versionsFrom('1.0.4.1');
+})
 
 Package.onTest(function(api) {
   api.use(['tinytest', 'xamfoo:isojs']);
