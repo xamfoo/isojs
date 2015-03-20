@@ -1,4 +1,4 @@
-Npm.depends({'esprima': '2.0.0'});
+Npm.depends({'esprima': '2.1.0'});
 
 Package.describe({
   name: 'xamfoo:isojs',
@@ -14,7 +14,7 @@ Package.registerBuildPlugin({
   sources: [
     'plugin/compile-isojs.js'
   ],
-  npmDependencies: {'esprima': '2.0.0', 'escodegen': '1.6.1'}
+  npmDependencies: {'esprima': '2.1.0', 'escodegen': '1.6.1'}
 });
 
 Package.onTest(function(api) {
