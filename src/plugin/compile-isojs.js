@@ -1,7 +1,7 @@
 var _ = Npm.require('underscore');
-var path = Npm.require('path');
 var esprima = Npm.require('esprima');
 var escodegen = Npm.require('escodegen');
+var sourcemap = Npm.require('source-map');
 
 // Convert source to abstract syntax tree
 var toAst = function (source, options) {
@@ -319,7 +319,7 @@ var handler = function (compileStep) {
       path: outputFile,
       sourcePath: compileStep.inputPath,
       data: source.code,
-      sourceMap: JSON.parse(source.map.toString()),
+      // sourceMap: JSON.parse(source.map.toString()),
       bare: compileStep.fileOptions.bare
     });
   }
